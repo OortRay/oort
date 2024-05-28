@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="Ferrari">
+    <meta name="keywords" content="Ferrari">
+    <title>Ferrari</title>
+    <link rel="icon" href="../images/logo2.jpg" style="background-color: rgba(0, 56, 103, .94) !important;">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../images/logo2.jpg">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/logo2.jpg">
+    <link rel="shortcut icon" href="../images/logo2.jpg" type="image/x-icon">
+    <link href="../css/common.css" rel="stylesheet" type="text/css">
+
+    <style>
+
+        .sale-search {
+            display: table;
+            vertical-align: middle;
+            width: 70%;
+            border: 2px  solid #807248;
+            height:50px;
+            line-height:50px;
+            margin:0 auto;
+            border-radius: 40px;
+        }
+
+        .sale-search span {
+            display: table-cell;
+            vertical-align: middle;
+            color: #fff;
+        }
+
+        .sale-search span:first-child {
+            padding-left: 2px;
+            width:80px;
+            font-size:16px;
+        }
+
+        .sale-search span:nth-child(2) {
+            padding-bottom:2px;
+        }
+
+        .sale-search input,.search input:focus {
+            margin-bottom: 0;
+            border-radius: 0;
+            height:50px;
+            line-height:50px;
+            width:100%;
+            padding-left:20px;
+            font-size:16px;
+        }
+        .sale-search input::-webkit-input-placeholder{color: #fff;font-size: 16px;}
+        .sale-search span:last-child {
+            width: 20%;
+            height: 100%;
+            text-align:center;
+        }
+
+        .sale-search span:last-child>img {
+            max-width: 40%;
+            margin-left: 25px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="wrapper wrapper-bg1">
+        <!--<div class="logo ta-c"><img src="../images/logo.png" alt="" height="70px;"></div>-->
+        <div style="position:absolute;right:20px;top: 45px;font-size:20px;color:#fff" id="loginUser"></div>
+        <div class="content" style="color: #fff;margin-top:35vh;">
+            <!--<div class="parts-title ta-c tt-font"><span style="color:#ACACAC" id="loginUser">&nbsp;&nbsp;&nbsp;</span></div>-->
+            <div class="form-btn">
+                <div class="sale-search" style="">
+			        <input type='text' maxlength='11' class='form-control mobileNum' style="float:left;width:80%;padding-left:20px;background-color:transparent;color: #fff;" placeholder='输入手机号后六位' value=''>
+			        <img src="../images/search.png" style="float:right;padding-right:5px;height: 40px;padding-top:5px;" onclick="javascript:queryFunc();"/>
+                </div>
+            </div>
+
+            <div class="form-btn" style="margin-top: 70px;">
+                <div class="confirm-btn" style="border: 0px;background: red;height:50px;">
+                    <input type="button" value="显示商机列表" class="ta-c" style="font-size:16px;color: #fff;line-height:50px;" onclick="javascript:showOpportunity()">
+                </div>
+            </div>
+
+            <div class="form-btn" style="margin-top: 100px;">
+                <div class="confirm-btn" style="border: 2px  solid #807248;height: 50px;">
+                    <input type="button" value="登出" class="ta-c" style="font-size:16px;color: #807248;line-height:45px;" onclick="javascript:logoutSubmit()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/common.js" type="text/javascript"></script>
+    <script src="../js/const.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        //let dealerName;
+
+        $(function () {
+
+            userName = sessionStorage.getItem("current_name");
+            $("#loginUser").html("您好，"+userName);
+            /*if (!dealerName) {
+                $("#addGuest").attr("disabled", "true");
+                $("#addAccompany").attr("disabled", "true");
+            }*/
+        });
+
+        // 查询
+        function queryFunc() {
+            if ($.trim($(".mobileNum").val()) == '' || $.trim($(".mobileNum").val()).length < 4) {
+                alert("请输入手机号后六位");
+                return;
+            }
+            location.href = "salesList.html?mobile=" + encodeURIComponent($.trim($(".mobileNum").val()));
+        }
+
+        function showOpportunity() {
+            location.href = "salesList.html?qBusiness=true";
+        }
+        // 登出
+        function logoutSubmit() {
+            location.href = "salesLogin.html";
+        }
+
+        // 禁止缩放
+        document.addEventListener('gesturestart', function (event) {
+            event.preventDefault()
+        })
+    </script>
+</body>
+</html>

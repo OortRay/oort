@@ -1,0 +1,129 @@
+<html style="font-size: 64.6875px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>过卡记录查询</title>
+    <link href="style/style.css" rel="stylesheet" type="text/css">
+    <script>
+        window.onload = function () {
+            var initialW = 640;
+            var clientW = document.documentElement.clientWidth;
+            if (clientW >= 640) {
+                document.documentElement.style.fontSize = "100px";
+                var main = document.getElementById("main");
+                clientW = 640;
+                main.style.width = clientW + "px";
+                main.style.marginLeft = "auto";
+                main.style.marginRight = "auto";
+                return;
+            };
+            var remW = clientW / initialW * 100;
+            document.documentElement.style.fontSize = remW + "px";
+
+            var regisInput = document.querySelector(".regisInput");
+            regisInput.onfocus = function () {
+                this.parentNode.style.background = "#f7f7f7";
+            };
+            regisInput.onblur = function () {
+                this.parentNode.style.background = "#EEEEEE";
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="header">
+        <h3>已过闸车辆信息查询</h3>
+    </div>
+    <div id="main">
+        <form method="post" action="./GateResultQuery.aspx" id="Form1">
+            <div class="aspNetHidden">
+                <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+                <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+                <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE"
+                    value="/wEPDwULLTE1MjY2NjYxMTlkZMM/YwUJbVgiC2BcwqsWM7+71Qo4p5QKPNHfow6UyK7V">
+            </div>
+
+            <script type="text/javasc1ript">
+                //<![CDATA[
+                var theForm = document.forms['Form1'];
+                if (!theForm) {
+                    theForm = document.Form1;
+                }
+
+                function __doPostBack(eventTarget, eventArgument) {
+                    if (){
+                        
+                    }
+                    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+                        theForm.__EVENTTARGET.value = eventTarget;
+                        theForm.__EVENTARGUMENT.value = eventArgument;
+                        theForm.submit();
+                    }
+                }
+                //]]>
+            </script>
+
+
+            <div class="aspNetHidden">
+
+                <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D002A252">
+                <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION"
+                    value="/wEdAAUlr6hvo9lwqxmMYU6XNl3oJy3pjLgyNr58jsdLjyzCdfl+A9bx0GEI21g0vedPEACnLmTXJ5o4HxRynlujBPU25X5QuFugyiMK6K7t3v+niaxHXUx58ZXiKd7gO0MXXZgzoASywJci/oQ+LpaLfeRA">
+            </div>
+            <ul class="ul-regis ul-bg">
+                <li>
+                    <label for="txtSearch" class="text-tip">车牌号</label><input name="txtSearch" type="text"
+                        id="txtSearch" class="regisInput"></li>
+                <li>
+                    <label for="txtResult" class="text-tip">结果</label>
+                    <select name="txtResult" id="txtResult" class="regisInput">
+                        <option value="">全部</option>
+                        <option value="1">成功</option>
+                        <option selected="selected" value="0">失败</option>
+                    </select></li>
+                <li>
+                    <label class="text-tip">验证码</label>
+
+                    <input name="txtCheckWord" type="text" id="txtCheckWord" class="regisInput"
+                        style="width: 50%; display: inline-block;">
+                    <span>
+                        <img id="imgCheckWord" src="CheckWord.aspx" alt="验证码" style="width: 80px; height: 30px;"
+                            onclick="javascript: this.src='CheckWord.aspx?rd=' + Math.random();">
+                    </span>
+
+                </li>
+            </ul>
+            <div class="btn-outer">
+                <button onclick="__doPostBack('QueryButton','')" id="QueryButton" type="submit"
+                    class="btn btn-blue btn-block">查询</button>
+            </div>
+        </form>
+        <div class="table-outer">
+            <table class="table table-border table-fixed">
+                <tbody>
+                    <tr>
+                        <th>核放单号</th>
+                        <th>车牌号</th>
+
+                        <th>进出标志</th>
+                        <th>过卡时间</th>
+                        <th>卡口号</th>
+                        <th>过卡结果</th>
+                        <th>通道号</th>
+                        <th>过卡重量</th>
+
+                        <th>结果描述</th>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

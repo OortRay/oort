@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no">
+	<meta http-equiv="cache-control" content="3600" />
+    <title>Ferrari</title>
+    <meta name="description" content="Ferrari">
+    <meta name="keywords" content="Ferrari">
+	<link rel="icon" href="../images/logo2.jpg" style="background-color: rgba(0, 56, 103, .94) !important;">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../images/logo2.jpg">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/logo2.jpg">
+	<link rel="shortcut icon" href="../images/logo2.jpg" type="image/x-icon">
+	<link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../plugins/swiper/css/swiper.min.css" rel="stylesheet">
+	<link href="../css/common.css?v=3" rel="stylesheet" type="text/css">
+	<link href="../css/layout.css?v=2" rel="stylesheet" type="text/css">
+	<link href="../css/search.css?v=2" rel="stylesheet" type="text/css">
+	<style>
+
+		.redstar:after {
+			content: "*";
+			color: red;
+			font-size: 15px;
+			width: 10px;
+			height: 21px;
+			display: inline-block;
+			vertical-align: middle;
+			text-align: center;
+			line-height: 25px;
+		}
+
+		.control-label {
+			padding-top: 2px !important;
+		}
+
+		label,input,select {
+			font-size:10px !important;
+			height: 30px !important;
+			line-height: 27px !important;
+			padding-left: 5px !important;
+			padding-right: 0px !important;
+		}
+		input select {
+			border: 1px solid #000;
+			border-radius: 5px !important;
+		}
+		.control-select {
+			height: 35px;
+		}
+		select {
+			padding-right: 25px !important;
+		}
+		.form-group {
+			margin-bottom: 5px !important;
+			margin-right: 0px !important;
+			margin-left: 0px !important;
+		}
+		.form-group div {
+			padding:0 5px !important;
+		}
+		.control-select:before {
+			width: 8px;
+			height: 8px;
+			margin-top: -5px;
+			top: 40%;
+			right: 8px;
+			border-right: 1px solid #666;
+			border-bottom: 1px solid #666;
+		}
+	</style>
+</head>
+<body style="font-size:16px;">
+	<div class="wrapper wrapper-bg1">
+		<!--<div class="logo ta-c"><img src="../images/logo.png" alt="" height="70px;"></div>-->
+		<!--<div style="position:absolute;right:20px;top: 45px;font-size:26px;" id="loginUser">您好，签到礼仪</div>-->
+
+		<form id="formInfo" action="" class="form-horizontal">
+			<input type="hidden" id="uuid" name="uuid" value=""/>
+			<input type="hidden" id="sales_id" name="sales_id" value=""/>
+			<input type="hidden" id="sales_name" name="sales_name" value=""/>
+			<div class="add-form" style="width:96vw;padding: 20px 5px;">
+
+				<div style="width:100%;text-align: left;color: red;">【客户信息】</div>
+				<div class="form-group" style="margin-top:20px;">
+					<label class="col-xs-2 control-label">接待场次</label>
+					<div class="col-xs-4">
+						<input type="text" id="reception_wave" name="reception_wave" class="form-control" value="" readonly/>
+					</div>
+					<label class="col-xs-2 control-label">接待报名</label>
+					<div class="col-xs-4">
+						<input type="text" id="reception_session" name="reception_session" class="form-control" value="" readonly/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-2 control-label">姓名</label>
+					<div class="col-xs-4">
+						<input type="text" id="chinese_name" name="chinese_name" class="form-control" value="" readonly/>
+					</div>
+					<label class="col-xs-2 control-label">称谓</label>
+					<div class="col-xs-4">
+						<input type="text" id="title" name="title" class="form-control" value="" readonly/>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-2 control-label">经销商</label>
+					<div class="col-xs-4">
+						<input type="text" id="dealer_name" name="dealer_name" class="form-control" value="" readonly/>
+					</div>
+					<label class="col-xs-2 control-label">手机号</label>
+					<div class="col-xs-4">
+						<input type="text" id="mobile" name="mobile" class="form-control" value="" readonly/>
+					</div>
+				</div>
+
+				<div style="width:100%;text-align: left;margin-top:20px;height:40px;color: red;">【商机信息】</div>
+
+				<div class="form-group">
+					<label class="col-xs-2 control-label redstar">意向车型</label>
+					<div class="col-xs-4 select-content">
+						<!--<span class="control-select">
+							<select id="intention_model" name="intention_model">
+								<option disabled="disabled" value="" selected>请选择</option>
+							</select>
+						</span>-->
+
+
+						<!--<input type="hidden" id="intention_model" name="intention_model">-->
+						<input type="text" name="intention_model" id="intention_model" class="select-input" value="" autocomplete="off" placeholder="" />
+						<div id="search_select" class="search-select">
+							<ul id="select_ul" class="select-ul">
+							</ul>
+						</div>
+
+					</div>
+					<label class="col-xs-2 control-label redstar">购买时间</label>
+					<div class="col-xs-4">
+						<span class="control-select">
+							<select id="purchase_date" name="purchase_date">
+								<option disabled="disabled" value="" selected>请选择</option>
+								<option value="0-3个月">0-3个月</option>
+								<option value="3-6个月">3-6个月</option>
+								<option value="6-12个月">6-12个月</option>
+								<option value="12个月以上">12个月以上</option>
+								<option value="暂无购车意愿">暂无购车意愿</option>
+							</select>
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-xs-2 control-label">购买预算</label>
+					<div class="col-xs-4">
+						<input type="text" id="purchase_budget" name="purchase_budget" maxlength="18" class="form-control" value="" />
+					</div>
+					<label class="col-xs-2 control-label">现有车型</label>
+					<div class="col-xs-4">
+						<input type="text" id="exist_model" name="exist_model" maxlength="18" class="form-control" value="" />
+					</div>
+				</div>
+
+				<div class="form-group" style="margin-top:12px;">
+					<label class="col-xs-2 control-label">省份</label>
+					<div class="col-xs-4">
+						<span class="control-select">
+							<select id="province" name="province" style="padding: 0 10px 2px 0;" onchange="setDistrictInfo('C');">
+							</select>
+						</span>
+					</div>
+					<label class="col-xs-2 control-label">城市</label>
+					<div class="col-xs-4">
+						<span class="control-select">
+							<select id="city" name="city" style="padding: 0 10px 2px 0;" onchange="">
+							</select>
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label  class="col-xs-5 control-label">是否考虑易手车金融服务：</label>
+					<div class="col-xs-3">
+						<span class="control-select">
+							<select id="is_yishouche" name="is_yishouche">
+								<option disabled="disabled" value="" selected>请选择</option>
+								<option value="是">是</option>
+								<option value="否">否</option>
+							</select>
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label  class="col-xs-2 control-label">备注：</label>
+					<div class="col-xs-10">
+						<input type="text"  name="sales_remark" id="sales_remark" class="control-form" maxlength="200" />
+					</div>
+				</div>
+
+				<div class="form-btn" style="margin:0 auto;padding-top:50px">
+					<div class="confirm-btn" style="width:45%;float:left;margin-left: 3%;;height:30px;border-radius: 5px;">
+						<input type="button" value="保存" id="addBtn" style="background: red;height:40px;line-height:50px;border-radius: 5px;" class="ta-c" onclick="javascript:saveInfoFunc();" />
+					</div>
+					<div class="confirm-btn" style="width:45%;float:right;margin-right:3%;background: #fff;;height:30px;border-radius: 5px;">
+						<input type="button" value="返回" class="ta-c" style="color:#000;height:40px;line-height:50px;" onclick="javascript:goBackFunc()" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script src="../js/jquery.min.js" type="text/javascript"></script>
+	<script src="../js/jSignature.js" type="text/javascript"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../plugins/swiper/js/swiper.min.js" type="text/javascript"></script>
+	<script src="../js/const.js" type="text/javascript"></script>
+	<script src="../js/search.js?v=1" type="text/javascript"></script>
+	<script>
+
+		let uuid = "";
+		let districtInfo;
+		let isSubmitting = false;
+		let carTypeList; // 带搜索框的下拉框-车型
+
+		$(function () {
+
+			if (!sessionStorage.getItem("current_name")) {
+				location.href = "salesLogin.html";
+			} else {
+				$("#sales_id").val(sessionStorage.getItem("current_id"));
+				$("#sales_name").val(sessionStorage.getItem("current_name"));
+			}
+
+			let url = location.search; //获取url中"?"符后的字串
+			if (url.indexOf("?") != -1) {    //判断是否有参数
+				let params = url.substr(1); //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串
+				let strs = params.split("&");
+				let strs1 = strs[0].split("="); // uuid参数
+				if (strs1[0] == "uuid") {
+					uuid = strs1[1]
+				}
+			}
+
+			if (uuid) {
+				$.ajax({
+					url: URL_DOMAIN + 'dealerfront/salesQuery',
+					data: {'uuid':uuid},
+					dataType: "json",
+					type: "post",
+					async: false,
+				}).then(function (data) {
+					if (data.result == 'success' && data.rows != null && data.rows.length > 0) {
+						$("#uuid").val(data.rows[0].uuid);
+						$("#reception_wave").val(data.rows[0].reception_wave);
+						$("#reception_session").val(data.rows[0].reception_session);
+						$("#dealer_name").val(data.rows[0].dealer_name);
+						$("#chinese_name").val(data.rows[0].chinese_name);
+						$("#title").val(data.rows[0].title);
+						$("#mobile").val(data.rows[0].mobile);
+						$("#intention_model").val(data.rows[0].intention_model);
+						$("#purchase_date").val(data.rows[0].purchase_date);
+						$("#purchase_budget").val(data.rows[0].purchase_budget);
+						$("#exist_model").val(data.rows[0].exist_model);
+						$("#is_yishouche").val(data.rows[0].is_yishouche);
+						$("#sales_remark").val(data.rows[0].sales_remark);
+
+						// 车型信息
+						carTypeList = data.carTypeList;
+						/*carTypeList.forEach(function(item){
+							$("#intention_model").append("<option value='" + item.code + "'>" + item.value_1 + "</option>");
+						});*/
+						searchInput(carTypeList);
+
+						// 保存省区市信息列表
+						districtInfo = data.dInfo;
+						setDistrictInfo("P");
+						$("#province").val(data.rows[0].province);
+						setDistrictInfo("C");
+						$("#city").val(data.rows[0].city);
+
+					} else {
+						alert('未查询到客户信息')
+						location.href = "salesMain.html"
+					}
+				})
+			} else {
+				location.href = "salesMain.html"
+			}
+
+			var swiper = new Swiper('.swiper-container', {
+				observer: true,
+				observeParents: true,
+				direction: 'vertical',
+				slidesPerView: 'auto',
+				freeMode: true,
+				observer: true,
+				observeParents: true,
+				scrollbar: {
+					el: '.swiper-scrollbar',
+				},
+				mousewheel: true,
+			});
+
+		});
+
+		// 保存接待信息
+		function saveInfoFunc() {
+			if (!isSubmitting) {
+
+				if (!$("#intention_model").val()) {
+					alert("请选择意向车型");
+					return;
+				}
+				if (!$("#purchase_date").val()) {
+					alert("请选择购买时间");
+					return;
+				}
+
+				isSubmitting = true;
+
+				$("#uuid").val(uuid);
+				$.ajax({
+					url: URL_DOMAIN + 'dealerfront/salesSave',
+					data: $("#formInfo").serialize(),
+					dataType: "json",
+					type: "post",
+					async: false,
+				}).then(function (data) {
+					if (data.result == 'success') {
+						alert("操作成功");
+						goBackFunc();
+					} else {
+						isSubmitting = false;
+						alert(data.message)
+					}
+				})
+			}
+		}
+
+		// 省市区设定
+		function setDistrictInfo(flg) {
+			let province = $("#province").val();
+			let city = $("#city").val();
+			//let district = $("#district").val();
+			if (flg == "P") {
+				$("#province").append("<option disabled='disabled' value='' selected>请选择</option>");
+			}
+			if (flg == "P" || flg == "C") {
+				$("#city").empty();
+				$("#district").empty();
+				$("#city").append("<option disabled='disabled' value='' selected>请选择</option>");
+			}
+			if (flg == "P" || flg == "C" || flg == "D") {
+				$("#district").empty();
+				$("#district").append("<option disabled='disabled' value='' selected></option>");
+			}
+
+			$.each(districtInfo,function(i, val){
+				if (flg == "P") {
+					if (val.id.length == 2) {
+						$("#province").append("<option value='" + val.name + "'>" + val.name + "</option>");
+					}
+				}
+				if (flg == "C") {
+					if (val.id.length == 4 && province && val.parent_name == province) {
+						$("#city").append("<option value='" + val.name + "'>" + val.name + "</option>");
+					}
+				}
+				if (flg == "D") {
+					if (val.id.length == 6 && city && val.parent_name == city) {
+						$("#district").append("<option value='" + val.name + "'>" + val.name + "</option>");
+					}
+				}
+			})
+		}
+
+		function goBackFunc() {
+			/*if (sessionStorage.getItem("rowsCount") > 1) {
+				history.go(-1);
+			} else {*/
+				location.href = "salesMain.html";
+			/*}*/
+		}
+
+		function checkName(str){
+			var reg = /^[\u4e00-\u9fa5a-zA-Z]+$/;
+			return reg.test(str);
+		}
+
+		// 禁止缩放
+		document.addEventListener('gesturestart', function (event) {
+			event.preventDefault()
+		})
+
+	</script>
+</body>
+</html>

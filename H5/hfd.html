@@ -1,0 +1,101 @@
+<html style="font-size: 64.6875px;"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>过卡失败信息查询</title>
+    <link href="style/style.css" rel="stylesheet" type="text/css">
+   <script>
+       window.onload = function () {
+           var initialW = 640;
+           var clientW = document.documentElement.clientWidth;
+           if (clientW >= 640) {
+               document.documentElement.style.fontSize = "100px";
+               var main = document.getElementById("main");
+               clientW = 640;
+               main.style.width = clientW + "px";
+               main.style.marginLeft = "auto";
+               main.style.marginRight = "auto";
+               return;
+           };
+           var remW = clientW / initialW * 100;
+           document.documentElement.style.fontSize = remW + "px";
+
+           var regisInput = document.querySelector(".regisInput");
+           regisInput.onfocus = function () {
+               this.parentNode.style.background = "#f7f7f7";
+           };
+           regisInput.onblur = function () {
+               this.parentNode.style.background = "#EEEEEE";
+           }
+
+       }
+	</script>	
+</head>
+<body>
+    <div id="header">
+        <h3>过卡失败信息查询</h3>
+    </div>
+    <div id="main">
+        <form method="post" action="./GateFailQuery.aspx" id="Form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE3MDI0MjQ1MDlkZPbizjP/tUmU16dQ3iW8iAlyNtS7ZOt2F027pt5OJhXM">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="547BFA6F">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAATpOf7V9awAltpOtk7/RLmHJy3pjLgyNr58jsdLjyzCdacuZNcnmjgfFHKeW6ME9TblflC4W6DKIwroru3e/6eJCatKRzKcHbd0A+EdTab9Z22HIdy3CVX9Ts/U6OvOIeg=">
+</div>
+            <ul class="ul-regis ul-bg">
+                <li>
+                    <label for="txtSearch" class="text-tip">车牌号</label><input name="txtSearch" type="text" id="txtSearch" class="regisInput"></li>
+                  <li>
+                       <label class="text-tip">验证码</label>
+                  
+                      <input name="txtCheckWord" type="text" id="txtCheckWord" class="regisInput" style="width:50%;display:inline-block;">
+                      <span>
+                          <img id="imgCheckWord" src="CheckWord.aspx" alt="验证码" style="width: 80px; height: 30px;" onclick="javascript: this.src='CheckWord.aspx?rd=' + Math.random();">
+                      </span>
+                       </li> 
+            </ul>
+            <div class="btn-outer">
+                <button onclick="__doPostBack('QueryButton','')" id="QueryButton" type="submit" class="btn btn-blue btn-block">查询</button>
+            </div>
+        </form>
+        <div class="table-outer">
+            <table class="table table-border table-fixed">
+                <tbody><tr>
+                    <th>核放单号</th>
+                    <th>车牌号</th>
+                   
+                    <th>进出标志</th>
+                    <th>过卡时间</th>
+                    <th>卡口号</th>
+                  
+                    <th>失败原因</th>
+                </tr>
+                
+            </tbody></table>
+        </div>
+    </div>
+
+
+</body></html>

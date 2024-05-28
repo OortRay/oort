@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>Ferrari</title>
+    <meta name="description" content="Ferrari">
+    <meta name="keywords" content="Ferrari">
+    <link rel="icon" href="../images/logo2.jpg" style="background-color: rgba(0, 56, 103, .94) !important;">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../images/logo2.jpg">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/logo2.jpg">
+    <link rel="shortcut icon" href="../images/logo2.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link href="../css/common.css" rel="stylesheet" type="text/css">
+    <link href="../css/layout.css" rel="stylesheet" type="text/css">
+    <style>
+        .content {
+            width:95vw;
+            margin: 0 auto;
+            margin-top:30vh;
+            height:68vh;
+            background: #F0F0F0;
+            /*opacity: 0.9;*/
+            border-radius: 5px;
+        }
+        .item-list td {
+            padding: 5px !important;
+            font-size: 8px !important;
+        }
+    </style>
+</head>
+<body class="hide" style="font-size:20px;">
+
+    <div class="wrapper wrapper-bg1">
+        <!--<div class="logo ta-c"><img src="../images/logo.png" alt="" height="70px;"></div>-->
+            <!--<div style="position:absolute;right:20px;top: 45px;font-size:26px;" id="loginUser">您好，签到礼仪</div>-->
+
+        <!-- 销售接待记录显示下面信息 -->
+        <div class="content">
+            <div style="width:100%;text-align: left;padding:10px 10px;font-size:12px;" id="busTotal" displayed></div>
+            <div style="height:50vh;margin:0 10px;overflow-y: scroll;">
+                <table class="item-list" style="width:100%;">
+                    <colgroup>
+                        <col style="width:15%;"/>
+                        <col style="width:10%;"/>
+                        <col style="width:25%;"/>
+                        <col style="width:35%;"/>
+                        <!--<col style="width:20%;"/>-->
+                        <col style="width:15%;"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <td style="border-bottom: 2px solid #000;height:40px;line-height: 40px;">姓名</td>
+                        <td style="border-bottom: 2px solid #000;height:40px;line-height: 40px;">称谓</td>
+                        <td style="border-bottom: 2px solid #000;height:40px;line-height: 40px;">手机号码</td>
+                        <!--<td style="border-bottom: 2px solid #000;height:60px;line-height: 60px;">客户类型</td>-->
+                        <td style="border-bottom: 2px solid #000;height:40px;line-height: 40px;">意向车型</td>
+                        <td style="border-bottom: 2px solid #000;height:40px;line-height: 40px;">操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="confirm-btn" style="height:50px;border: 2px solid #000;width: 70%;margin-top:30px;">
+                <input type="button" style="color: #000;line-height: 40px;" value="返回" class="ta-c" id="btnReturn" onclick="javascript:location.href='salesMain.html'">
+            </div>
+        </div>
+
+    </div>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/const.js" type="text/javascript"></script>
+    <script>
+
+        let status;
+
+        $(function () {
+
+            //status = sessionStorage.getItem("current_status");
+
+            if (sessionStorage.getItem("current_name")) {
+                $("#loginUser").text("您好，" + sessionStorage.getItem("current_name"));
+            } else {
+                location.href = "salesLogin.html";
+            }
+
+            // 获取url中的mobile
+            let mobile = "";
+            let qBusiness = "";
+            let url = location.search; //获取url中"?"符后的字串
+            if (url.indexOf("?") != -1) {    //判断是否有参数
+                let str = url.substr(1); //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串
+                let strs = str.split("=");
+                if (strs[0] == 'mobile') {
+                    mobile = strs[1];
+                } else if (strs[0] == 'qBusiness') {
+                    qBusiness = strs[1];
+                }
+            }
+            /*if (mobile) {*/
+                $.ajax({
+                    url: URL_DOMAIN + 'dealerfront/salesQuery',
+                    data: {'mobile':decodeURIComponent(mobile),'sales_id':sessionStorage.getItem("current_id"),'qBusiness':qBusiness},
+                    dataType: "json",
+                    type: "post",
+                    async: false,
+                }).then(function (data) {
+                    if (data.result == 'success') {
+                        sessionStorage.setItem("rowsCount", data.rows.length);
+                        if (data.rows != null && data.rows.length > 0) {
+                            // mobile不是空，代表是手机号搜索
+                            if (data.rows.length == 1 && mobile != "") {
+                                location.href = "salesDetail.html?uuid=" + data.rows[0].uuid;
+                            } else {
+                                let appendHtml = "";
+                                data.rows.forEach(function (vMap, index) {
+                                    appendHtml = appendHtml + "<tr>";
+                                    appendHtml = appendHtml + "<td style='font-size: 8px;line-height: 20px;height: 20px'>" + vMap.chinese_name + "</td>";
+                                    appendHtml = appendHtml + "<td style='font-size: 8px;line-height: 20px;height: 20px'>" + vMap.title + "</td>";
+                                    let mobile = vMap.mobile;
+                                    if (mobile != '' && mobile.length == 11) {
+                                        mobile = mobile.substr(0,3) + "****" + mobile.substr(7);
+                                    }
+                                    appendHtml = appendHtml + "<td style='font-size: 8px;line-height: 20px;height: 20px;font-size: 10px;'>" + mobile + "</td>";
+                                    if (vMap.intention_model == undefined) {
+                                        appendHtml = appendHtml + "<td style='line-height: 20px;height: 20px'></td>";
+                                    } else {
+                                        appendHtml = appendHtml + "<td style='font-size: 6px !important;line-height: 20px;height: 20px'>"+vMap.intention_model+"</td>";
+                                    }
+                                    appendHtml = appendHtml + "<td style='font-size: 8px;line-height: 20px;height: 30px'><a href='salesDetail.html?uuid=" + vMap.uuid + "' style='display: block;background: red;color: #fff;border-radius: 5px;' className='btn'>查看</a></td>";
+                                    appendHtml = appendHtml + "</tr>";
+                                });
+                                $(".item-list tbody").html(appendHtml);
+                                $("body").removeClass("hide");
+
+                                if (qBusiness == "true") {
+                                    $("#busTotal").html("已存商机：" + data.total + "条");
+                                    $("#busTotal").show();
+                                }
+                            }
+                        } else {
+                            if (qBusiness == "true") {
+                                alert('未查询到商机信息');
+                            } else {
+                                if (data.totalCustomer == 0) {
+                                    alert('未查询到客户信息');
+                                } else {
+                                    alert('该客户未签到');
+                                }
+                            }
+                            history.go(-1);
+                        }
+                    } else {
+                        alert('信息查询失败')
+                        location.href = "salesMain.html"
+                    }
+                })
+            /*} else {
+                location.href = "salesMain.html"
+            }*/
+
+        });
+
+        // 禁止缩放
+        document.addEventListener('gesturestart', function (event) {
+            event.preventDefault()
+        })
+    </script>
+</body>
+</html>

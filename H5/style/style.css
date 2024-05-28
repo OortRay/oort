@@ -1,0 +1,76 @@
+/* 共用样式 */
+html,body{ margin:0px; padding:0px; height:100%; color:#414141; }
+
+div, h1, h2, h3, h4, h5 ,h6, p, form, label, input, textarea, img, ul, li, dl, dt, dd, span{margin:0; padding:0;}
+ul,li{margin:0; padding:0; list-style-type:none;}
+
+.clearfix:after{ visibility:hidden; display:block; font-size:0; content:""; clear:both; height:0; }
+.clearfix{ zoom:1; }
+*{ box-sizing:border-box; }
+.fl{ float:left; }
+.fr{ float:right; }
+
+
+
+/* 开始页的上部图片 只第一页注册须知有 */
+.startPic{ height:3rem; }	
+.startPic img{ width:100%; height:100%; }
+
+
+/* 页面头 */
+#header{ background:linear-gradient(to right,#4689f6,#25c6fe); -webkit-linear-gradient(left,#4596ff,#21cefe); height:1rem; overflow:hidden; }/* background:#449bfe; */
+#header h3{ line-height:1rem; font-size:0.4rem; text-align:center; color:#FFF; font-weight:normal; }
+
+/*  页面主体内容区*/
+#main{ padding:0.2rem; }
+
+
+
+/*  注册 ul  */
+
+
+.ul-regis li{ line-height:0.8rem; height:0.8rem; font-size:0.3rem; padding:0 0.1rem; margin-top:0.2rem; padding-left:1.5rem; overflow:hidden; position:relative;  }
+.ul-regis li span{ position:absolute; right:10px; top:5px; }
+.ul-regis li em{ font-style:normal; color:#777777; }
+
+/*  标签车牌号  */
+.text-tip{ position:absolute; margin-left:-1.2rem; color:#777777; }
+
+/*  底色+弧角  */
+.ul-bg li{ background:#EEEEEE; border-radius:0.07rem; }
+
+
+/*  注册input  */
+.regisInput{ line-height:0.8rem; font-size:0.3rem;; height:0.8rem; background:transparent; width:100%; display:block; outline:none; border:none; }
+
+
+
+
+
+	
+	
+/*  表格  */
+.table{ width:100%; border-collapse:collapse; }
+.table th,.table td{ height:0.8rem; font-size:0.26rem; padding:0 0.1rem; text-align:left; border:1px solid #DFDFDF;  white-space: nowrap; color:#414141;}
+.table th{ background: #f9f9f9; }
+
+.table th:first-child,.table td:first-child{ border-left:none; }
+.table th:last-child,.table td:last-child{ border-right:none; }
+
+.table-outer{ overflow-x:auto; }
+
+	
+	
+/*  按钮 */
+
+.btn{ height:0.8rem; line-height:0.8rem; outline:none; border:none; border-radius:0.08rem; padding:0 0.5rem; text-align:center; }
+
+.btn-block{ display:block; width:100%;  }
+.btn-blue{ background:#4b7bf3; color:#FFFFFF; font-size:0.35rem ; }
+.btn-blue:hover{ background:#3070d0; }
+.btn-white{ background:#FFFFFF; color:#414141; font-size:0.3rem ; border:1px solid #BBBBBB; }
+
+.btn-left{ height:0.7rem; line-height:0.7rem; outline:none; border:none; border-radius:0.08rem 0 0 0.08rem ; padding:0 0.5rem; text-align:center; }
+.btn-right{ height:0.7rem; line-height:0.7rem; outline:none; border-radius:0 0.08rem 0.08rem 0; padding:0 0.5rem; text-align:center; }
+
+.btn-outer{ padding:0.3rem 0; }

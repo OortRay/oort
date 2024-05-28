@@ -1,0 +1,690 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no">
+	<meta http-equiv="cache-control" content="3600" />
+    <title>Ferrari</title>
+    <meta name="description" content="Ferrari">
+    <meta name="keywords" content="Ferrari">
+	<link rel="icon" href="../images/logo2.jpg" style="background-color: rgba(0, 56, 103, .94) !important;">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../images/logo2.jpg">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/logo2.jpg">
+	<link rel="shortcut icon" href="../images/logo2.jpg" type="image/x-icon">
+	<link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../plugins/swiper/css/swiper.min.css" rel="stylesheet">
+	<link href="../css/common.css?v=3" rel="stylesheet" type="text/css">
+	<link href="../css/layout.css?v=2" rel="stylesheet" type="text/css">
+	<style>
+		.control-label {
+			padding-top: 0px !important;
+		}
+
+		.redstar:after {
+			content: "*";
+			color: #000;
+			font-size: 20px;
+			width: 10px;
+			height: 20px;
+			display: inline-block;
+			vertical-align: middle;
+			text-align: center;
+			line-height: 25px;
+		}
+
+		/*This is the div within which the signature canvas is fitted*/
+		.signature {
+			color:darkblue;
+			border: 2px dotted black;
+			background-color:lightgrey;
+			min-height: 153px;
+			margin:20px 20px;
+		}
+
+	</style>
+</head>
+<body style="font-size:16px;">
+	<div class="wrapper wrapper-bg1">
+		<!--<div class="logo ta-c"><img src="../images/logo.png" alt="" height="70px;"></div>-->
+		<!--<div style="position:absolute;right:20px;top: 45px;font-size:26px;" id="loginUser">您好，签到礼仪</div>-->
+
+		<form id="formInfo" action="" class="form-horizontal">
+			<input type="hidden" id="uuid" name="uuid" value=""/>
+			<input type="hidden" id="current_id" name="current_id" value=""/>
+			<input type="hidden" id="is_import" name="is_import" value=""/>
+			<div class="add-form">
+				<div class="form-group" style="margin-top: 10px;margin-bottom:20px;">
+					<label class="col-md-12 col-sm-12 control-label customerTypeTitle" style="color: red;text-align: right;right:-15px;font-size:32px;font-weight: bold"></label>
+					<input type="hidden" name="customer_type" id="customer_type" value="" />
+				</div>
+				<div class="form-group isAccompany hide">
+					<label class="col-md-2 col-sm-2 control-label redstar">主宾号码</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="guest_mobile" name="guest_mobile" maxlength="11" class="form-control" value="" />
+					</div>
+					<label  class="col-md-2 col-sm-2 control-label">与主宾关系</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text"  name="connection" id="connection" class="control-form" maxlength="60" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 col-sm-2 control-label redstar">经销商</label>
+					<div class="col-md-10 col-sm-10">
+						<span class="control-select">
+							<select id="dealer_name" name="dealer_name" onchange="javascript:changeDealer();">
+								<option disabled="disabled" value="" selected>请选择</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				<div class="form-group isReception">
+					<label class="col-md-2 col-sm-2 control-label">场次</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="wave" name="wave" class="form-control" value="" disabled />
+					</div>
+					<label class="col-md-2 col-sm-2 control-label">报名场次</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="session" name="session" class="form-control" value="" disabled />
+					</div>
+				</div>
+				<div class="form-group" style="margin-top:10px;">
+					<label class="col-md-2 col-sm-2 control-label redstar">接待场次</label>
+					<div class="col-md-4 col-sm-4">
+						<span class="control-select">
+							<select id="reception_wave" name="reception_wave" onchange="javascript:changeWave();">
+								<option disabled="disabled" value="" selected>请选择</option>
+							</select>
+						</span>
+					</div>
+					<label  class="col-md-2 col-sm-2 control-label redstar">接待报名</label>
+					<div class="col-md-4 col-sm-4">
+						<span class="control-select">
+							<select id="reception_session" name="reception_session">
+								<option disabled="disabled" value="" selected>请选择</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 col-sm-2 control-label redstar">姓名</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="chinese_name" name="chinese_name" class="form-control" value="" />
+					</div>
+					<label class="col-md-2 col-sm-2 control-label redstar">称谓</label>
+					<div class="col-md-4 col-sm-4">
+						<span class="control-select">
+							<select id="title" name="title">
+								<option disabled="disabled" value="" selected>请选择</option>
+								<option value="先生">先生</option>
+								<option value="女士">女士</option>
+							</select>
+						</span>
+					</div>
+					<!--<label class="col-md-2 col-sm-2 control-label">客户类别</label>
+					<div class="col-md-4 col-sm-4" style="margin-top:3px">
+						<span class="control-select">
+							<select id="customer_type">
+								<option disabled="disabled" value="" selected>请选择</option>
+								<option value="guest">guest</option>
+								<option value="guest">accompany</option>
+							</select>
+						</span>
+					</div>-->
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 col-sm-2 control-label">姓拼音</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="last_name" name="last_name" class="form-control" value="" />
+					</div>
+					<label class="col-md-2 col-sm-2 control-label">名拼音</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="first_name" name="first_name" class="form-control" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 col-sm-2 control-label mobileLabel redstar">手机号</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="mobile" name="mobile" class="onlyNum form-control" maxlength="11" />
+					</div>
+					<label class="col-md-2 col-sm-2 control-label">车主潜客</label>
+					<div class="col-md-4 col-sm-4">
+						<span class="control-select">
+							<select id="owner_type" name="owner_type">
+								<option disabled="disabled" value="" selected>请选择</option>
+								<option value="车主">车主</option>
+								<option value="潜客">潜客</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				<!--<div class="form-group">
+					<label  class="col-md-2 col-sm-2 control-label">拥有车型</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="model" name="model" class="form-control" maxlength="30">
+					</div>
+					<label  class="col-md-2 col-sm-2 control-label">客人来源</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="source" name="source" class="form-control" maxlength="60">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 col-sm-2 control-label">客人级别</label>
+					<div class="col-md-4 col-sm-4">
+						<span class="control-select">
+							<select id="level" name="level">
+								<option disabled="disabled" value="" selected>请选择</option>
+								<option value="0-3个月">0-3个月</option>
+								<option value="4-6个月">4-6个月</option>
+								<option value="7-12个月">7-12个月</option>
+								<option value="12个月以上">12个月以上</option>
+							</select>
+							<span class="drownbtn" style="left: 90%;"></span>
+						</span>
+					</div>
+					<label  class="col-md-2 col-sm-2 control-label">异业合作</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="marketing" name="marketing" class="form-control" maxlength="60">
+					</div>
+				</div>-->
+				<div class="form-group">
+					<label  class="col-md-2 col-sm-2 control-label">销售顾问</label>
+					<div class="col-md-4 col-sm-4">
+						<input type="text" id="sales" name="sales" class="form-control" maxlength="30" />
+					</div>
+				</div>
+
+				<!--<div class="form-group">
+					<label  class="col-md-4 col-sm-4 control-label">Modis签署时间</label>
+					<div class="col-md-8 col-sm-8">
+						<input type="text"  name="gdpr" id="gdpr" class="control-form" style="height:40px;" maxlength="300"></textarea>
+					</div>
+				</div>-->
+				<div class="form-group">
+					<label  class="col-md-2 col-sm-2 control-label">备注</label>
+					<div class="col-md-10 col-sm-10">
+						<input type="text"  name="remark" id="remark" class="control-form" maxlength="300" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-2 col-sm-2" style="height: 35px;"></label>
+					<div class="col-md-6 col-sm-6" style="padding:10px 10px;font-size:20px;">
+						<input type="checkbox" id="rulesChkbox1" style="vertical-align:text-top; margin-top:0;height:28px;width:25px;">
+							&nbsp;&nbsp;我已同意<a href="javascript:;" class="showRulePop1" style="text-decoration:underline">隐私政策及肖像授权</a>
+						</input>
+					</div>
+					<div class="col-md-3 col-sm-3" style="padding:5px 10px;font-size:20px;">
+						<img id="rulePic1" src="../images/noSign.png" width="130px" height="50px;" style="padding-left:20px;" />
+						<input type="hidden" name="file1" id="file1"/>
+					</div>
+				</div>
+				<!--<div class="form-group">
+					<label class="col-md-2 col-sm-2" style="height: 35px;"></label>
+					<div class="col-md-6 col-sm-6" style="padding:10px 10px;font-size:20px;">
+						<input type="checkbox" id="rulesChkbox2" style="vertical-align:text-top; margin-top:0;height:28px;width:25px;">
+						&nbsp;&nbsp;我已同意<a href="javascript:;" class="showRulePop2" style="text-decoration:underline">健康承诺书</a>
+						</input>
+					</div>
+					<div class="col-md-3 col-sm-3" style="padding:5px 10px;font-size:20px;">
+						<img id="rulePic2" src="../images/noSign.png" width="130px" height="50px;" style="padding-left:20px;" />
+						<input type="hidden" name="file2" id="file2"/>
+					</div>
+				</div>-->
+				
+				<div class="form-btn" style="margin:0 auto;padding-top:10px">
+					<div class="confirm-btn" style="width:45%;float:left;margin-left: 5%;;height:55px;border-radius: 5px;">
+						<input type="button" value="接待" id="addBtn" style="background: red;height:50px;line-height:50px;" class="ta-c" onclick="javascript:saveInfoFunc();" />
+					</div>
+					<div class="confirm-btn" style="width:45%;float:right;background: #fff;;height:55px;border-radius: 5px;">
+						<input type="button" value="返回" class="ta-c" style="color:#000;height:50px;line-height:50px;" onclick="javascript:goBackFunc()" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!--隐私政策肖像授权-->
+	<div class="pop flex center jc hide" id="rulePop1">
+		<div class="rule-cont pop-cont-write" style="background: #fff;">
+			<div class="rule-tit ta-c">隐私政策及肖像授权</div>
+			<div class="swiper-container rule-art" id="swiper-rule1" style="padding:0 34px 0 20px;">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide scroll-txt">
+						<div><img src="../images/item-2.png" alt="" style="pointer-events:none;" width="100%"></div>
+						<div><img src="../images/item-3.png" alt="" style="pointer-events:none;" width="100%"></div>
+					</div>
+				</div>
+				<!-- Add Scroll Bar -->
+				<div class="swiper-scrollbar" id="scrollbar-rule1" style="right:10px;"></div>
+			</div>
+			<div id="signatureDemo1"></div>
+			<div class="form-btn">
+				<div class="confirm-btn" style="background:#000;width: 48%;float: left;">
+					<input type="button" value="同意" class="ta-c agree" onclick="ruleChkBoxSubmit('1');">
+				</div>
+				<div class="confirm-btn" style="background:#ACACAC;width: 48%;float: right;">
+					<input type="button" class="ta-c reset" value="Reset">
+				</div>
+			</div>
+			<div class="close"><img src="../images/icon-8.png" alt="" width="24px" height="24px"></div>
+		</div>
+	</div>
+
+	<!--防疫政策-->
+	<div class="pop flex center jc hide" id="rulePop2">
+		<div class="rule-cont pop-cont-write" style="background: #fff;">
+			<div class="rule-tit ta-c">健康承诺书</div>
+			<div class="swiper-container rule-art" id="swiper-rule2" style="padding:0 34px 0 20px;">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide scroll-txt">
+						<div><img src="../images/item-4.png" alt="" style="pointer-events:none;" width="100%"></div>
+					</div>
+				</div>
+				<!-- Add Scroll Bar -->
+				<div class="swiper-scrollbar" id="scrollbar-rule2" style="right:10px;"></div>
+			</div>
+			<div id="signatureDemo2"></div>
+			<div class="form-btn">
+				<div class="confirm-btn" style="background:#000;width: 48%;float: left;">
+					<input type="button" value="同意" class="ta-c agree" onclick="ruleChkBoxSubmit('2');">
+				</div>
+				<div class="confirm-btn" style="background:#ACACAC;width: 48%;float: right;">
+					<input type="button" class="ta-c reset" value="Reset">
+				</div>
+			</div>
+			<div class="close"><img src="../images/icon-8.png" alt="" width="24px" height="24px"></div>
+		</div>
+	</div>
+
+	<script src="../js/jquery.min.js" type="text/javascript"></script>
+	<script>
+		/*  @preserve
+        jQuery pub/sub plugin by Peter Higgins (dante@dojotoolkit.org)
+        Loosely based on Dojo publish/subscribe API, limited in scope. Rewritten blindly.
+        Original is (c) Dojo Foundation 2004-2010. Released under either AFL or new BSD, see:
+        http://dojofoundation.org/license for more information.
+        */
+		(function($) {
+			var topics = {};
+			$.publish = function(topic, args) {
+				if (topics[topic]) {
+					var currentTopic = topics[topic],
+							args = args || {};
+
+					for (var i = 0, j = currentTopic.length; i < j; i++) {
+						currentTopic[i].call($, args);
+					}
+				}
+			};
+			$.subscribe = function(topic, callback) {
+				if (!topics[topic]) {
+					topics[topic] = [];
+				}
+				topics[topic].push(callback);
+				return {
+					"topic": topic,
+					"callback": callback
+				};
+			};
+			$.unsubscribe = function(handle) {
+				var topic = handle.topic;
+				if (topics[topic]) {
+					var currentTopic = topics[topic];
+
+					for (var i = 0, j = currentTopic.length; i < j; i++) {
+						if (currentTopic[i] === handle.callback) {
+							currentTopic.splice(i, 1);
+						}
+					}
+				}
+			};
+		})(jQuery);
+	</script>
+	<script src="../js/jSignature.js" type="text/javascript"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../plugins/swiper/js/swiper.min.js" type="text/javascript"></script>
+	<script src="../plugins/jSignature/jSignature.CompressorBase30.js"></script>
+	<script src="../plugins/jSignature/jSignature.CompressorSVG.js"></script>
+	<script src="../plugins/jSignature/jSignature.UndoButton.js"></script>
+	<script src="../plugins/jSignature/signhere/jSignature.SignHere.js"></script>
+	<script src="../js/const.js" type="text/javascript"></script>
+	<script>
+
+		let $sigdiv;
+		let uuid = "";
+		let customerType = "";
+		let dealerName;
+		let waveJson = "";
+
+		// 初始化签名
+		function signatureInit(index) {
+			$("#signatureDemo"+index).html('<div class="signature" id="ruleSignature'+index+'"></div>');
+			$sigdiv = $("#ruleSignature" + index).jSignature();
+
+			$(".reset").bind('click', function(e){
+				$sigdiv.jSignature('reset')
+			});
+		}
+
+		let isSubmitting = false;
+
+		// 隐私政策/防疫政策提交
+		function ruleChkBoxSubmit(index) {
+			javascript:$('#rulesChkbox'+index).prop('checked',true);
+			var data = $sigdiv.jSignature('getData', "image");
+			if (data != null && data[1].length > 2404) {
+				$("#rulePic"+index).attr("src", "data:" + data[0] + ',' + data[1]);
+				$("#file"+index).val(data[1]);
+			}
+		}
+
+		$(function () {
+
+			if (!sessionStorage.getItem("current_name")) {
+				location.href = "login.html";
+			} else {
+				$("#current_id").val(sessionStorage.getItem("current_id"));
+			}
+
+			let url = location.search; //获取url中"?"符后的字串
+			if (url.indexOf("?") != -1) {    //判断是否有参数
+				let params = url.substr(1); //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串
+				let strs = params.split("&");
+				let strs1 = strs[0].split("="); // mobile参数
+				let strs2 = strs[1].split("="); // uuid参数
+				if (strs1[0] == "customerType") {
+					customerType = strs1[1]
+				}
+				if (strs2[0] == "uuid") {
+					uuid = strs2[1];
+				}
+			}
+
+			// 经销商设定
+			let dealerInfo = sessionStorage.getItem("dealer_info").split(",");
+			$("#dealer_name").html('<option disabled="disabled" value="" selected>请选择</option>');
+			for (let index in dealerInfo) {
+				$("#dealer_name").append("<option value="+dealerInfo[index]+">"+dealerInfo[index]+"</option>");
+			}
+
+			if (sessionStorage.getItem("wave_info")) {
+				waveJson = JSON.parse(sessionStorage.getItem("wave_info"));
+			}
+
+			// 是主宾的时候
+			if (customerType == 'guest') {
+				$(".customerTypeTitle").text("【主宾】");
+			} else if (customerType == 'accompany') {
+				// 是陪同的时候
+				$(".customerTypeTitle").text("【陪同】");
+				$(".form-group.isAccompany").removeClass("hide");
+			} else {
+				location.href = "main.html"
+			}
+
+			if (uuid) {
+				$.ajax({
+					url: URL_DOMAIN + 'dealerfront/query',
+					data: {'uuid':uuid},
+					dataType: "json",
+					type: "post",
+					async: false,
+				}).then(function (data) {
+					if (data.result == 'success' && data.rows != null && data.rows.length > 0) {
+						$("#uuid").val(data.rows[0].uuid);
+						$("#wave").val(data.rows[0].wave);
+						$("#session").val(data.rows[0].session);
+						$("#dealer_name").val(data.rows[0].dealer_name);
+						changeDealer();
+						$("#customer_type").val(data.rows[0].customer_type);
+						$("#guest_mobile").val(data.rows[0].guest_mobile);
+						$("#chinese_name").val(data.rows[0].chinese_name);
+						$("#last_name").val(data.rows[0].last_name);
+						$("#first_name").val(data.rows[0].first_name);
+						$("#title").val(data.rows[0].title);
+						$("#mobile").val(data.rows[0].mobile);
+						$("#owner_type").val(data.rows[0].owner_type);
+						$("#source").val(data.rows[0].source);
+						$("#marketing").val(data.rows[0].marketing);
+						$("#level").val(data.rows[0].level);
+						$("#model").val(data.rows[0].model);
+						$("#connection").val(data.rows[0].connection);
+						$("#sales").val(data.rows[0].sales);
+						$("#gdpr").val(data.rows[0].gdpr);
+						$("#remark").val(data.rows[0].remark);
+
+						// 是主宾是，手机不允许修改
+						if ($("#customer_type").val() == 'guest') {
+							$("#mobile").attr("disabled", "true");
+						} else
+						// 是陪同时，主宾号码不能修改
+						if ($("#customer_type").val() == 'accompany') {
+							$("#guest_mobile").attr("disabled", "true");
+							$(".mobileLabel").removeClass("redstar");
+						}
+						$("#is_import").val(data.rows[0].is_import);
+						// 已接待的时候
+						if (data.rows[0].reception_id) {
+							$("#reception_wave").val(data.rows[0].reception_wave);
+							$("#reception_wave").change();
+							$("#reception_session").val(data.rows[0].reception_session);
+
+							$('#rulesChkbox1').prop('checked',true);
+							/*$('#rulesChkbox2').prop('checked',true);*/
+							if (data.file1) {
+								$("#rulePic1").attr("src", "data:image/png;base64," + data.file1);
+								$("#file1").val(data.file1);
+							}
+							/*if (data.file2) {
+								$("#rulePic2").attr("src", "data:image/png;base64," + data.file2);
+								$("#file2").val(data.file2);
+							}*/
+						}
+					} else {
+						alert('未查询到客户信息')
+						location.href = "main.html"
+					}
+				})
+			} else {
+				$("#is_import").val("0");
+				$(".form-group.isReception").addClass("hide");
+				$("#addBtn").val("新建");
+
+				// 当前礼仪所属经销商
+				dealerName = sessionStorage.getItem("current_dealer");
+				if (dealerName) {
+					$("#dealer_name").val(dealerName);
+					changeDealer();
+					//$("#dealer_name").attr("disabled", "true");
+				}
+			}
+
+			if ($("#mobile").val()) {
+				$("#mobile").attr("disabled", "disabled");
+			}
+
+			var swiper = new Swiper('.swiper-container', {
+				observer: true,
+				observeParents: true,
+				direction: 'vertical',
+				slidesPerView: 'auto',
+				freeMode: true,
+				observer: true,
+				observeParents: true,
+				scrollbar: {
+					el: '.swiper-scrollbar',
+				},
+				mousewheel: true,
+			});
+
+		});
+
+		// 经销商选择
+		function changeDealer() {
+			if (waveJson) {
+				let keyArr=[];
+				Object.keys(waveJson).forEach((key,index)=>{keyArr.push(key);});
+				keyArr.sort();
+				$("#reception_wave").html('<option disabled="disabled" value="" selected>请选择</option>');
+				for (let key in keyArr) {
+					$("#reception_wave").append("<option value="+keyArr[key]+">"+keyArr[key]+"</option>");
+				}
+			} else if ($("#dealer_name").val()) {
+				$.ajax({
+					url: URL_DOMAIN + 'dealerfront/getWaveInfo',
+					data: {'dealer_name': $("#dealer_name").val()},
+					dataType: "json",
+					type: "post",
+					async: false,
+					success: (function (data) {
+						if (data.result == 'success') {
+							// wave_info设定
+							waveJson = JSON.parse(data.wave_info);
+							let keyArr = [];
+							Object.keys(waveJson).forEach((key, index) => {
+								keyArr.push(key);
+							});
+							keyArr.sort();
+							$("#reception_wave").html('<option disabled="disabled" value="" selected>请选择</option>');
+							for (let key in keyArr) {
+								$("#reception_wave").append("<option value=" + keyArr[key] + ">" + keyArr[key] + "</option>");
+							}
+						} else {
+							alert(data.message)
+						}
+					})
+				})
+			}
+			return true;
+		}
+
+		// 接待报名场次修改联动
+		function changeWave() {
+			$("#reception_session").html('<option disabled="disabled" value="" selected>请选择</option>');
+			for (let key in waveJson) {
+				if ($("#reception_wave").val() == key) {
+					let sessionArray = waveJson[key];
+					for (let key2 in sessionArray) {
+						$("#reception_session").append("<option value="+sessionArray[key2]+">"+sessionArray[key2]+"</option>");
+					}
+				}
+			}
+		}
+
+		// 保存接待信息
+		function saveInfoFunc() {
+			if (!isSubmitting) {
+
+				if (customerType == "accompany") {
+					if ($("#guest_mobile").val() == "") {
+						alert("请填写主宾手机号码");
+						return;
+					} else {
+						if ($("#guest_mobile").val() && (!/^1[0-9]{10}$/.test($("#guest_mobile").val()) || $("#guest_mobile").val().length < 11)) {
+							alert("请正确填写主宾手机号码");
+							return;
+						}
+					}
+					/*if ($("#connection").val() == "") {
+						alert("请填写与主宾关系");
+						return;
+					}*/
+				}
+
+				if (!$("#dealer_name").val()) {
+					alert("请选择经销商");
+					return;
+				}
+				if (!$("#reception_wave").val()) {
+					alert("请选择接待场次");
+					return;
+				}
+
+				if (!$("#reception_session").val()) {
+					alert("请选择接待报名场次");
+					return;
+				}
+				if (!$("#chinese_name").val()) {
+					alert("请填写姓名");
+					return;
+				}
+				if (!$("#title").val()) {
+					alert("请选择称谓");
+					return;
+				}
+				if (customerType == "guest" && !$("#mobile").val()) {
+					alert("请填写手机号");
+					return;
+				}
+				if ($("#mobile").val() && (!/^1[0-9]{10}$/.test($("#mobile").val()) || $("#mobile").val().length < 11)) {
+					alert("请正确填写手机号");
+					return;
+				}
+				if (!$('#rulesChkbox1').prop('checked') || $("#file1").val() == ''){
+					alert("请阅读隐私政策及肖像使用授权并签名");
+					return;
+				}
+				/*if (!$('#rulesChkbox2').prop('checked') || $("#file2").val() == '') {
+					alert("请阅读防疫政策并签名");
+					return;
+				}*/
+				isSubmitting = true;
+
+				$("#uuid").val(uuid);
+				$("#customer_type").val(customerType);
+				$.ajax({
+					url: URL_DOMAIN + 'dealerfront/save',
+					data: $("#formInfo").serialize(),
+					dataType: "json",
+					type: "post",
+					async: false,
+				}).then(function (data) {
+					if (data.result == 'success') {
+						alert("操作成功");
+						goBackFunc();
+					} else {
+						isSubmitting = false;
+						alert(data.message)
+					}
+				})
+			}
+		}
+
+		function goBackFunc() {
+			if (sessionStorage.getItem("rowsCount") > 1) {
+				history.go(-1);
+			} else {
+				location.href = "main.html";
+			}
+		}
+
+		function checkName(str){
+			var reg = /^[\u4e00-\u9fa5a-zA-Z]+$/;
+			return reg.test(str);
+		}
+
+		$('.showRulePop1').on('click', function (e) {
+			e.stopPropagation();
+			$('#rulePop1').removeClass('hide');
+			signatureInit("1");
+		});
+		$('.showRulePop2').on('click', function (e) {
+			e.stopPropagation();
+			$('#rulePop2').removeClass('hide');
+			signatureInit("2");
+		});
+
+		//关闭弹窗
+		$('.close , .agree').on('click', function () {
+			$(this).parents('.pop').addClass('hide');
+		})
+
+		// 禁止缩放
+		document.addEventListener('gesturestart', function (event) {
+			event.preventDefault()
+		})
+	</script>
+</body>
+</html>

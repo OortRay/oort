@@ -1,0 +1,51 @@
+.select-content {
+	/*width: 30%;*/
+	position: relative;
+}
+.select-content .select-input {
+	width: 100%;
+}
+.select-content .sanjiao {
+	position: absolute;
+	left: 190px;
+	top: -2px;
+	cursor: pointer;
+}
+.select-content .sanjiao .dot-bottom {
+	font-size: 0;
+	line-height: 0;
+	border-width: 5px;
+	border-color: #6a6a6a;
+	border-bottom-width: 0;
+	border-style: dashed;
+	border-top-style: solid;
+	border-left-color: transparent;
+	border-right-color: transparent;
+}
+.select-content .search-select {
+	display: none;
+	position: absolute;
+	left: 5px;
+	top: 32px;
+	z-index: 999;
+	min-width: 200px;
+	max-height: 300px;
+	overflow-y: auto;
+	/*border: 1px solid #799bd2;*/
+	background-color: #F0F0F0;
+}
+.select-content .search-select .select-ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.select-content .search-select .select-ul .li-select {
+	color: #555;
+	padding: 2px 10px;
+	cursor: pointer;
+	font-size:10px;
+}
+.select-content .search-select .select-ul .li-hover {
+	color: #fff;
+	background-color: #1e90ff;
+}
